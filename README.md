@@ -4,9 +4,9 @@ This is a rough plan for adding lint configuration by config file to Cargo.
 
 It's a continuation of [this Cargo issue][that_issue]. I copied over relevant parts
 that were written by @rantanen and expanded on additional parts. @detrumi opened
-a [PR for Cargo][detrumi_pr]. However, it was decided at the time that the
-design should go through more discussion first. That's what this RFC is meant
-to kick-off.
+a [PR for Cargo][detrumi_pr] when the issue was opened. However, it was decided
+at the time that the design should go through more discussion first. That's what
+this RFC is meant to kick-off.
 
 ## Summary
 
