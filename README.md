@@ -18,18 +18,25 @@ more cumbersome when the project is a workspace with dozen crates.
 Being able to define the lints in an external file that will be used when
 building the crates would have several benefits:
 
- * Sharing one configuration file for all the crates in a workspace.
+ * Sharing one configuration file for all the crates in a workspace therefore
+   ensuring consist lint levels everywhere.
  * A canonical place to check for lint configuration when contributing to a new
    project.
  * An easy way to examine the version history for lint changes.
 
-Some samples of where this would bring improvements:
+Some real world examples of where this could bring improvements:
 
-* [This rustc rollup which denies a lint in various subcrates][rollup]
-* [serde lib.rs][ex_serde]
-* [serde_derive lib.rs][ex_serde2]
-* [diesel lib.rs][ex_diesel]
-* [diesel_migrations lib.rs][ex_diesel2]
+[This rustc rollup][rollup] which denies a single lint in various subcrates over
+multiple PRs.
+
+[serde's lib.rs][ex_serde] and [serde_derive's lib.rs][ex_serde2] would also benefit
+from having a central lint configuration file. The same for
+the [diesel lib.rs][ex_diesel] and [diesel_migrations lib.rs][ex_diesel2].
+
+The [Amethyst game framework][amethyst] with 15 different sub crates has to
+enable warnings for the `rust_2018_ideoms` and `rust_2018_compatibilty` lint
+groups in [every][am_1] [single][am_2] [one][am_3] [of][am_4] [the][am_5]
+[sub-crates][am_6] (that's 6 of them linked here).
 
 ## Prior art and Rust
 
@@ -157,7 +164,8 @@ Things that still need work or aren't even included in the text, yet:
 3. Check if .toml syntax in examples is correct
 4. Find out what `.cargo/config` is currently used for. Write down pros/cons of putting the lint config into `.cargo/config`. Add this to the appropriate section.
 5. In general expand the Pros/Cons of the configuration file section
-6. What about lint groups? Rustc now also has the `cargo` lint group
+6. What about lint groups? Rustc now also has the `cargo` lint group as well as the
+   `rust_2018_ideoms` and `rust_2018_compatibilty` lint groups.
 7. How does precedence work? Can packages override workspaces, or the other way around? Or maybe based on strictness (workspaces can make lints more restrictive, not less)?
 8. How much of an issue is errors for unknown lints? My feeling is that it
    should be OK, but it does set a floor for the minimum supported rustc for
@@ -167,6 +175,7 @@ Things that still need work or aren't even included in the text, yet:
    may be tricky in a large project. I personally think it would be good to have
    the intent to implement location reporting in rustc before stabilization.
    TODO @oli_obk made a suggestion for this somewhere on GitHub, need to find again
+10. Ensure all github code links are permalinks
 
 ## Unresolved Questions
 
@@ -180,3 +189,10 @@ TODO
 [rollup]: https://github.com/rust-lang/rust/pull/52268
 [eslint]: https://eslint.org/docs/user-guide/getting-started#configuration
 [rubocop]: https://docs.rubocop.org/en/latest/basic_usage/
+[amethyst]: https://github.com/amethyst/amethyst
+[am_1]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_derive/src/lib.rs#L2
+[am_2]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_animation/src/lib.rs#L48
+[am_3]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_assets/src/lib.rs#L10
+[am_4]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_audio/src/lib.rs#L1
+[am_5]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_config/src/lib.rs#L6
+[am_6]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_controls/src/lib.rs#L3
