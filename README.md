@@ -66,16 +66,19 @@ lints and those lints depend on the compilation process.
 Lint configuration can also be done through a configuration file.  The
 configuration needs to be able to configure the `allow/warn/deny/forbid` lint
 levels for each lint. In order to be more teachable, using toml syntax is
-probably the best way to configure the lints.
+probably the best way to configure the lints. The most obvious location is in
+the `Cargo.toml` file.
 
 ## Reference-level explanation
 
 In the most basic version, it would be possible to set the
 `allow/warn/deny/forbid` of lints that are registered with the lint registry.
+These would be grouped in a new `[lints]` section.
 
 That would give us a format like this:
 
 ```toml
+[lints]
 dead_code = "allow"
 non_snake_case = "allow"
 ```
@@ -87,6 +90,7 @@ more than just the lint level.
 Another possible format would be:
 
 ```toml
+[lints]
 allow = [dead_code, non_snake_case, ...]
 ```
 
@@ -103,21 +107,14 @@ lints if Clippy isn't used.
 Also if Cargo/rustc ever support lint configurations, this would be more future proof:
 
 ```toml
+[lints]
 cyclomatic_complexity = { state = "allow", threshold = 30 }
 ```
 
-The next section discusses the different places where the lint configuration
-could be stored. There are upsides and downsides for each of the locations.
-
-### Which configuration file?
-
-#### Cargo.toml
+### Why Cargo.toml?
 
 The `Cargo.toml` is already used for configuring project and workspace level
-settings. I suppose most users would expect to find lint configuration in here.
-
-Using the `Cargo.toml` to configure lints would need a new `[lints]` section.
-
+settings. Most users would expect to find lint configuration there.
 
 Rust is different compared to other languages because we have the built-in lints
 (via `cargo check`) and then tool lints which use the same mechanism but through
@@ -133,31 +130,39 @@ expect to be able to configure tool lints through a Cargo configuration file.
   * If the use case is for large organizations to share common settings, then this assumes they have a monolithic workspace which may not be true for everyone.
   * The counter argument for something like lints.toml is the proliferation of many config files for a Cargo project (rustfmt.toml, lints.toml, .cargo/config, etc.).
 
+
+TODO: ~~Summarize the different config files and~~ come to a conclusion
+
+## Alternatives
+
+### Different configuration file location
+
+There are some other plausible locations to configure lints, such as
+`.config/cargo` or `Lints.toml`.
+
 #### .config/cargo
 
+A more standard location to store lint configuration would be `.config/cargo`.
 As with `Cargo.toml` this file would need a new `[lints]` section, too.
 
 - Pro: users could add their personal lint preferences in their home directory.
 - Con: I would estimate that almost every project would want to make use of a lint configuration file, which means that every project would end up having to create the additional `.config/cargo` file.
-(Both rubocop and eslint support this)
-
+(Both [rubocop][rubocop] and [eslint][eslint] support this)
 
 #### Lints.toml
 
-A third option would be a completely separate file. Maybe called `Lints.toml`.
+Another option would be a completely separate file. Maybe called `Lints.toml`.
 This would be the most flexible implementation because we would not have to care
-about existing code for `Cargo.toml` or `.config/cargo`.
+about existing code for `Cargo.toml` or `.config/cargo`. It is also more similar
+to the existing `Clippy.toml`.
 
 However, it would also mean that, like with `.config/cargo`, users have to add
 an additional configuration file to the roots of their repositories.
 
-Additionally, we may also want to handle `rustfmt` configuration and we would
-need to find a more general name. See the next section on other tool
-configuration.
+Additionally, we may also want to handle `rustfmt` configuration, and we would
+need to find a more general name.
 
-TODO: Summarize the different config files and come to a conclusion
-
-## Alternatives
+### TODO Other alternatives
 
 * Is there a more general solution? How does this relate to other tool configurations such as rustfmt.toml?
 -> Also see Clippy.toml
@@ -170,6 +175,7 @@ TODO: Try to think of a more general approach
 * It might be desirable to also be able to configure the settings of specifics lints. This could also replace
 the `clippy.toml` file, which currently allows configuring lints.
 * It would make sense to include other settings related to lints, such as output verbosity or `--cap-lints` in the lint configuration.
+* Other tools could also add lints to the same lints section, not just Clippy.
 
 ## TODO text
 
