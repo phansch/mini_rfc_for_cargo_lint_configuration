@@ -3,13 +3,10 @@
 This is a rough plan for adding lint configuration by config file to Cargo.
 
 It's a continuation of [this Cargo issue][that_issue]. I copied over relevant parts
-that were written by @rantanen and expanded on additional parts.
-
-Previously this topic came up a few times in the Clippy issue tracker:
-
-* https://github.com/rust-lang/rust-clippy/issues/574
-* https://github.com/rust-lang/rust-clippy/issues/1313
-* https://github.com/rust-lang/rust-clippy/issues/3164
+that were written by @rantanen and expanded on additional parts. @detrumi opened
+a [PR for Cargo][detrumi_pr]. However, it was decided at the time that the
+design should go through more discussion first. That's what this RFC is meant
+to kick-off.
 
 ## Summary
 
@@ -43,6 +40,12 @@ Some real world examples of where this could bring improvements:
   [sub-crates][am_6] (that's 6 of them linked here).
 * Similarily [ripgrep][ripgrep] denies the `missing_docs` lint in all of its 9
   workspace members: [GitHub search][ripgrep_search]
+
+Previously this topic came up a few times in the Clippy issue tracker as well:
+
+* https://github.com/rust-lang/rust-clippy/issues/574
+* https://github.com/rust-lang/rust-clippy/issues/1313
+* https://github.com/rust-lang/rust-clippy/issues/3164
 
 ## Prior art and Rust
 
@@ -95,8 +98,8 @@ lint. However, this woul probably make diffs more difficult to read.
 
 The lints can be specified on the workspace level and for individual packages.
 Anything on the package level will override the workspace setup on per lint
-basis. Specifying clippy-lints will result in clippy complaining about unknown
-lints if clippy isn't used.
+basis. Specifying clippy-lints will result in Clippy complaining about unknown
+lints if Clippy isn't used.
 
 Also if Cargo/rustc ever support lint configurations, this would be more future proof:
 
@@ -205,3 +208,4 @@ TODO
 [am_6]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_controls/src/lib.rs#L3
 [ripgrep]: https://github.com/BurntSushi/ripgrep
 [ripgrep_search]: https://github.com/BurntSushi/ripgrep/search?q=missing_docs&unscoped_q=missing_docs
+[detrumi_pr]: https://github.com/rust-lang/cargo/pull/5728
