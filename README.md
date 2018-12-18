@@ -10,18 +10,18 @@ this Mini-RFC is meant to kick-off.
 
 ## Summary
 
-Configure lint levels and possibly lint specific settings via a config file.
+Configure lint levels and possibly configure lints via a config file.
 
 ## Motivation
 
-Currently project-wide lint configuration needs to be included in the crate
+Currently, project-wide lint configuration needs to be included in the crate
 sources. This is okay when the project consists of a single crate, but gets
-more cumbersome when the project is a workspace with dozen crates.
+more cumbersome when the project is a workspace with a dozen crates.
 
 Being able to define the lints in an external file that will be used when
 building the crates would have several benefits:
 
- * Sharing one configuration file for all the crates in a workspace therefore
+ * Sharing one configuration file for all the crates in a workspace, therefore
    ensuring consistent lint levels everywhere.
  * A canonical place to check for lint configuration when contributing to a new
    project.
@@ -32,9 +32,9 @@ Some real world examples of where this could bring improvements:
 * [This rustc rollup][rollup] which denies a single lint in various subcrates
   over multiple PRs.
 * [serde's lib.rs][ex_serde] and [serde_derive's lib.rs][ex_serde2] would also
-  benefit from having a central lint configuration file. The same for the
-  [diesel lib.rs][ex_diesel] and [diesel_migrations lib.rs][ex_diesel2].
-* The [Amethyst game framework][amethyst] with 15 different sub crates has to
+  benefit from having a central lint configuration file. The same for
+  [diesel's lib.rs][ex_diesel] and [diesel_migrations's lib.rs][ex_diesel2].
+* The [Amethyst game framework][amethyst], with 15 different sub crates, has to
   enable warnings for the `rust_2018_ideoms` and `rust_2018_compatibilty` lint
   groups in [every][am_1] [single][am_2] [one][am_3] [of][am_4] [the][am_5]
   [sub-crates][am_6] (that's 6 of them linked here).
@@ -43,18 +43,18 @@ Some real world examples of where this could bring improvements:
 
 Previously this topic came up a few times in the Clippy issue tracker as well:
 
-* https://github.com/rust-lang/rust-clippy/issues/574
-* https://github.com/rust-lang/rust-clippy/issues/1313
-* https://github.com/rust-lang/rust-clippy/issues/3164
+* [#574: Ability to conditionally set levels for lints when not using clippy through cargo features](previous_574)
+* [#1313: Allow/deny lints in clippy.toml](previous_1313)
+* [#3164: It is impossible to understand from the readme file how to supress lints using clippy.toml](previous_3164)
 
 ## Prior art and Rust
 
-In other programming language ecosystems the concerns of dependency management
+In other programming language ecosystems, the concerns of dependency management
 and things such as lint configuration are handled by completely separate tools.
 This is usually because the language itself does not come with any lints like
-Rust. For example, in Javascript you have [eslint][eslint] and the package.json
-which don't really interact. In Ruby you have [Rubocop][rubocop] for lints and
-then bundler for dependencies.
+Rust. For example, in Javascript, you have [eslint][eslint] and the package.json,
+which don't really interact. In Ruby, you have [Rubocop][rubocop] for lints and
+bundler for dependencies.
 
 TODO: It would be good to look at some statically typed languages and see how they handle linting.
 
@@ -66,8 +66,7 @@ lints and those lints depend on the compilation process.
 Lint configuration can also be done through a configuration file.  The
 configuration needs to be able to configure the `allow/warn/deny/forbid` lint
 levels for each lint. In order to be more teachable, using toml syntax is
-probably the best way to configure the lints. 
-
+probably the best way to configure the lints.
 
 ## Reference-level explanation
 
@@ -81,9 +80,9 @@ dead_code = "allow"
 non_snake_case = "allow"
 ```
 
-This format would make git history easy to read and would allow adding lint
-configuration options later on. It also allows to group lints together in other
-ways than just the lint level.
+This format would make git history easy to read and would allow you to add
+configuration options to lints later on. It also allows grouping of lints on
+more than just the lint level.
 
 Another possible format would be:
 
@@ -92,12 +91,12 @@ allow = [dead_code, non_snake_case, ...]
 ```
 
 This has the benefit of not having to repeat the lint level for every single
-lint. However, this woul probably make diffs more difficult to read.
+lint. However, this would probably make diffs more difficult to read.
 
 ### Lint precedence
 
 The lints can be specified on the workspace level and for individual packages.
-Anything on the package level will override the workspace setup on per lint
+Anything on the package level will override the workspace setup on a per lint
 basis. Specifying clippy-lints will result in Clippy complaining about unknown
 lints if Clippy isn't used.
 
@@ -115,7 +114,7 @@ could be stored. There are upsides and downsides for each of the locations.
 #### Cargo.toml
 
 The `Cargo.toml` is already used for configuring project and workspace level
-settings. I suppose most users would expect to find lint configuration in here. 
+settings. I suppose most users would expect to find lint configuration in here.
 
 Using the `Cargo.toml` to configure lints would need a new `[lints]` section.
 
@@ -136,7 +135,7 @@ expect to be able to configure tool lints through a Cargo configuration file.
 
 #### .config/cargo
 
-As with `Cargo.toml` this file would need a new `[lints]` section, too. 
+As with `Cargo.toml` this file would need a new `[lints]` section, too.
 
 - Pro: users could add their personal lint preferences in their home directory.
 - Con: I would estimate that almost every project would want to make use of a lint configuration file, which means that every project would end up having to create the additional `.config/cargo` file.
@@ -168,7 +167,8 @@ TODO: Try to think of a more general approach
 
 ## Future possibilities
 
-* It might be desirable to also be able to configure the settings of specifics lints. Such as via the `clippy.toml`.
+* It might be desirable to also be able to configure the settings of specifics lints. This could also replace
+the `clippy.toml` file, which currently allows configuring lints.
 * It would make sense to include other settings related to lints, such as output verbosity or `--cap-lints` in the lint configuration.
 
 ## TODO text
@@ -219,3 +219,6 @@ TODO
 [ripgrep]: https://github.com/BurntSushi/ripgrep
 [ripgrep_search]: https://github.com/BurntSushi/ripgrep/search?q=missing_docs&unscoped_q=missing_docs
 [detrumi_pr]: https://github.com/rust-lang/cargo/pull/5728
+[previous_574]: https://github.com/rust-lang/rust-clippy/issues/574
+[previous_1313]: https://github.com/rust-lang/rust-clippy/issues/1313
+[previous_3164]: https://github.com/rust-lang/rust-clippy/issues/3164
