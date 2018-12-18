@@ -173,6 +173,39 @@ need to find a more general name.
 
 ## Future possibilities
 
+### Diagnostics for lint level definition location reporting
+
+With the current approach we pass all lint level definitions from the config
+file to rustc via the command line arguments. Consequently, rustc will tell the
+user the lint level has been defined on the command-line. This is the opposite
+of helpful if the user want to change the level of the lint:
+
+```
+error: any use of this value will cause an error
+  --> $DIR/const-err-multi.rs:13:1
+   |
+LL | pub const A: i8 = -std::i8::MIN;
+   | ^^^^^^^^^^^^^^^^^^-------------^
+   |                   |
+   |                   attempt to negate with overflow
+   |
+   = note: requested on the command line with `-D const_err`
+```
+
+Ideally, the user would get a `note` like this:
+
+```
+note: lint level defined here
+  --> $HOME/code/rust/Cargo.toml:511:1
+   |
+LL | const_err = { state = "deny" }
+   | ^^^^^^^^^
+```
+
+Adding a new variant to [`LintSource`][lintsource] is the easy part, but how is this
+information passed from Cargo to rustc? Should we pass a json file with lint
+level definition locations to rustc everytime cargo invokes rustc?
+
 * It might be desirable to also be able to configure the settings of specifics lints. This could also replace
 the `clippy.toml` file, which currently allows configuring lints.
 * It would make sense to include other settings related to lints, such as output verbosity or `--cap-lints` in the lint configuration.
@@ -191,11 +224,6 @@ Things that still need work or aren't even included in the text, yet:
 1. How much of an issue is errors for unknown lints? My feeling is that it
    should be OK, but it does set a floor for the minimum supported rustc for
    something that is not really critical.
-1. How important is it to report the location of the lint? Currently rustc will
-   tell you it's in the command-line. Finding the correct location for the lint
-   may be tricky in a large project. I personally think it would be good to have
-   the intent to implement location reporting in rustc before stabilization.
-   TODO @oli_obk made a suggestion for this somewhere on GitHub, need to find again
 
 ## Unresolved Questions
 
@@ -230,3 +258,4 @@ TODO
 [previous_3164]: https://github.com/rust-lang/rust-clippy/issues/3164
 [cargo_config]: https://doc.rust-lang.org/cargo/reference/config.html
 [other_irlo_post]: https://internals.rust-lang.org/t/tool-configs-in-cargo-toml-particularily-rustfmt-clippy/9055
+[lintsource]: https://doc.rust-lang.org/nightly/nightly-rustc/rustc/lint/enum.LintSource.html
