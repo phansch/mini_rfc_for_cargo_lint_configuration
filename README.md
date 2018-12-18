@@ -126,7 +126,7 @@ TODO: Try to think of a more general approach
 
 ## Future possibilities
 
-* It might be desireable to also be able to configure the settings of specifics lints. Such as via the `clippy.toml`.
+* It might be desirable to also be able to configure the settings of specifics lints. Such as via the `clippy.toml`.
 * It would make sense to include other settings related to lints, such as output verbosity or `--cap-lints` in the lint configuration.
 
 ## TODO text
