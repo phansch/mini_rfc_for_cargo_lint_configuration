@@ -3,8 +3,7 @@
 This is a rough plan for adding lint configuration by config file to Cargo.
 
 It's a continuation of [this issue][that_issue]. I copied over relevant parts
-that were written by @rantanen and expanded on additional parts. It's supposed
-to be a rough plan on how this can be finally added to Cargo.
+that were written by @rantanen and expanded on additional parts.
 
 ## Summary
 
