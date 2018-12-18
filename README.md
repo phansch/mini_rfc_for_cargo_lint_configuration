@@ -135,7 +135,7 @@ expect to be able to configure tool lints through a Cargo configuration file.
 * Is Cargo.toml really the best place? Need to clarify why to choose one approach over the others.
   * If the use case is for large organizations to share common settings, then this assumes they have a monolithic workspace which may not be true for everyone.
   * The counter argument for something like lints.toml is the proliferation of many config files for a Cargo project (rustfmt.toml, lints.toml, .cargo/config, etc.).
-  
+
 #### .config/cargo
 
 As with `Cargo.toml` this file would need a new `[lints]` section, too. 
