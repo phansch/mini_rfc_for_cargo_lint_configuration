@@ -2,8 +2,14 @@
 
 This is a rough plan for adding lint configuration by config file to Cargo.
 
-It's a continuation of [this issue][that_issue]. I copied over relevant parts
+It's a continuation of [this Cargo issue][that_issue]. I copied over relevant parts
 that were written by @rantanen and expanded on additional parts.
+
+Previously this topic came up a few times in the Clippy issue tracker:
+
+* https://github.com/rust-lang/rust-clippy/issues/574
+* https://github.com/rust-lang/rust-clippy/issues/1313
+* https://github.com/rust-lang/rust-clippy/issues/3164
 
 ## Summary
 
@@ -49,7 +55,8 @@ then bundler for dependencies.
 
 TODO: It would be good to look at some statically typed languages and see how they handle linting.
 
-Rust is different from these examples because it already comes with built-in lints. TODO: expand
+Rust is different from these examples because it already comes with built-in
+lints and those lints depend on the compilation process.
 
 ## Guide-level explanation
 
