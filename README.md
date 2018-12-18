@@ -4,7 +4,7 @@ This is a rough plan for adding lint configuration by config file to Cargo.
 
 It's a continuation of [this Cargo issue][that_issue]. I copied over relevant parts
 that were written by @rantanen and expanded on additional parts. @detrumi opened
-a [PR for Cargo][detrumi_pr] when the issue was opened. However, it was decided
+a [Cargo PR][detrumi_pr] when the issue was opened. However, it was decided
 at the time that the design should go through more discussion first. That's what
 this Mini-RFC is meant to kick-off.
 
@@ -124,40 +124,38 @@ both commands work with the same underlying system. Therefore, new users may not
 expect to be able to configure tool lints through a Cargo configuration file.
 
 - Pro: Everyone already has it. No need for additional files.
-- Con: People might say that the Cargo.toml is part of Cargo which should just be concerned about package management and not lint configuration.
+- Con: People might say that `Cargo.toml` is part of Cargo, which should just be
+concerned about package management and not lint configuration.
 - Con: Users might not expect external tool configuration to go into Cargo.toml
 
-* Is Cargo.toml really the best place? Need to clarify why to choose one approach over the others.
-  * If the use case is for large organizations to share common settings, then this assumes they have a monolithic workspace which may not be true for everyone.
-  * The counter argument for something like lints.toml is the proliferation of many config files for a Cargo project (rustfmt.toml, lints.toml, .cargo/config, etc.).
-
-
-TODO: ~~Summarize the different config files and~~ come to a conclusion
+TODO: come to a conclusion
 
 ## Alternatives
 
 ### Different configuration file location
 
 There are some other plausible locations to configure lints, such as
-`.config/cargo` or `Lints.toml`.
+`.cargo/config` or `Lints.toml`.
 
-#### .config/cargo
+#### .cargo/config
 
-A more standard location to store lint configuration would be `.config/cargo`.
-As with `Cargo.toml` this file would need a new `[lints]` section, too.
+A more standard location, though less well-known, would be `.cargo/config` (see [Cargo reference](cargo_docs)).
+As with `Cargo.toml`, this file would need a new `[lints]` section, too.
 
-- Pro: users could add their personal lint preferences in their home directory.
-- Con: I would estimate that almost every project would want to make use of a lint configuration file, which means that every project would end up having to create the additional `.config/cargo` file.
+- Pro: Users could add their personal lint preferences in their home directory (both `$HOME/.cargo/config` and `.cargo/config` are supported).
+- Con: Lint configuration would supposedly be pretty common, while custom Cargo configuration is rarely used.
+- Con: I would estimate that almost every project would want to make use of a lint configuration file, which means that every project would end up having to create the additional `.cargo/config` file.
+
 (Both [rubocop][rubocop] and [eslint][eslint] support this)
 
 #### Lints.toml
 
 Another option would be a completely separate file. Maybe called `Lints.toml`.
 This would be the most flexible implementation because we would not have to care
-about existing code for `Cargo.toml` or `.config/cargo`. It is also more similar
+about existing code for `Cargo.toml` or `.cargo/config`. It is also more similar
 to the existing `Clippy.toml`.
 
-However, it would also mean that, like with `.config/cargo`, users have to add
+However, it would also mean that, like with `.cargo/config`, users have to add
 an additional configuration file to the roots of their repositories.
 
 Additionally, we may also want to handle `rustfmt` configuration, and we would
@@ -184,7 +182,6 @@ Things that still need work or aren't even included in the text, yet:
 
 1. Difference between 'workspace level' and 'individual packages'?
 1. Check if .toml syntax in examples is correct
-1. Find out what `.cargo/config` is currently used for. Write down pros/cons of putting the lint config into `.cargo/config`. Add this to the appropriate section.
 1. In general expand the Pros/Cons of the configuration file section
 1. What about lint groups? Rustc now also has the `cargo` lint group as well as the
    `rust_2018_ideoms` and `rust_2018_compatibilty` lint groups.
@@ -229,3 +226,4 @@ TODO
 [previous_574]: https://github.com/rust-lang/rust-clippy/issues/574
 [previous_1313]: https://github.com/rust-lang/rust-clippy/issues/1313
 [previous_3164]: https://github.com/rust-lang/rust-clippy/issues/3164
+[cargo_config]: https://doc.rust-lang.org/cargo/reference/config.html
