@@ -140,9 +140,14 @@ Things that still need work or aren't even included in the text, yet:
 5. In general expand the Pros/Cons of the configuration file section
 6. What about lint groups? Rustc now also has the `cargo` lint group
 7. How does precedence work? Can packages override workspaces, or the other way around? Or maybe based on strictness (workspaces can make lints more restrictive, not less)?
-8. How much of an issue is errors for unknown lints? My feeling is that it should be OK, but it does set a floor for the minimum supported rustc for something that is not really critical.
-9. How important is it to report the location of the lint? Currently rustc will tell you it's in the command-line. Finding the correct location for the lint may be tricky in a large project. I personally think it would be good to have the intent to implement location reporting in rustc before stabilization.
-  TODO @oli_obk made a suggestion for this somewhere on GitHub, need to find again
+8. How much of an issue is errors for unknown lints? My feeling is that it
+   should be OK, but it does set a floor for the minimum supported rustc for
+   something that is not really critical.
+9. How important is it to report the location of the lint? Currently rustc will
+   tell you it's in the command-line. Finding the correct location for the lint
+   may be tricky in a large project. I personally think it would be good to have
+   the intent to implement location reporting in rustc before stabilization.
+   TODO @oli_obk made a suggestion for this somewhere on GitHub, need to find again
 
 ## Unresolved Questions
 
