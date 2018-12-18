@@ -19,24 +19,24 @@ Being able to define the lints in an external file that will be used when
 building the crates would have several benefits:
 
  * Sharing one configuration file for all the crates in a workspace therefore
-   ensuring consist lint levels everywhere.
+   ensuring consistent lint levels everywhere.
  * A canonical place to check for lint configuration when contributing to a new
    project.
  * An easy way to examine the version history for lint changes.
 
 Some real world examples of where this could bring improvements:
 
-[This rustc rollup][rollup] which denies a single lint in various subcrates over
-multiple PRs.
-
-[serde's lib.rs][ex_serde] and [serde_derive's lib.rs][ex_serde2] would also benefit
-from having a central lint configuration file. The same for
-the [diesel lib.rs][ex_diesel] and [diesel_migrations lib.rs][ex_diesel2].
-
-The [Amethyst game framework][amethyst] with 15 different sub crates has to
-enable warnings for the `rust_2018_ideoms` and `rust_2018_compatibilty` lint
-groups in [every][am_1] [single][am_2] [one][am_3] [of][am_4] [the][am_5]
-[sub-crates][am_6] (that's 6 of them linked here).
+* [This rustc rollup][rollup] which denies a single lint in various subcrates
+  over multiple PRs.
+* [serde's lib.rs][ex_serde] and [serde_derive's lib.rs][ex_serde2] would also
+  benefit from having a central lint configuration file. The same for the
+  [diesel lib.rs][ex_diesel] and [diesel_migrations lib.rs][ex_diesel2].
+* The [Amethyst game framework][amethyst] with 15 different sub crates has to
+  enable warnings for the `rust_2018_ideoms` and `rust_2018_compatibilty` lint
+  groups in [every][am_1] [single][am_2] [one][am_3] [of][am_4] [the][am_5]
+  [sub-crates][am_6] (that's 6 of them linked here).
+* Similarily [ripgrep][ripgrep] denies the `missing_docs` lint in all of its 9
+  workspace members: [GitHub search][ripgrep_search]
 
 ## Prior art and Rust
 
@@ -196,3 +196,5 @@ TODO
 [am_4]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_audio/src/lib.rs#L1
 [am_5]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_config/src/lib.rs#L6
 [am_6]: https://github.com/amethyst/amethyst/blob/8e7f06a9bca8b60664855cac12dd74be7ddc0c82/amethyst_controls/src/lib.rs#L3
+[ripgrep]: https://github.com/BurntSushi/ripgrep
+[ripgrep_search]: https://github.com/BurntSushi/ripgrep/search?q=missing_docs&unscoped_q=missing_docs
