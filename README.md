@@ -178,7 +178,7 @@ need to find a more general name.
 With the current approach we pass all lint level definitions from the config
 file to rustc via the command line arguments. Consequently, rustc will tell the
 user the lint level has been defined on the command-line. This is the opposite
-of helpful if the user want to change the level of the lint:
+of helpful if the user wants to change the level of the lint:
 
 ```
 error: any use of this value will cause an error
