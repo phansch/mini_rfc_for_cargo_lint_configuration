@@ -169,27 +169,31 @@ TODO: Try to think of a more general approach
 
 Things that still need work or aren't even included in the text, yet:
 
-1. Need a clearer description of the motivation and use cases.
-2. Difference between 'workspace level' and 'individual packages'?
-3. Check if .toml syntax in examples is correct
-4. Find out what `.cargo/config` is currently used for. Write down pros/cons of putting the lint config into `.cargo/config`. Add this to the appropriate section.
-5. In general expand the Pros/Cons of the configuration file section
-6. What about lint groups? Rustc now also has the `cargo` lint group as well as the
+1. Difference between 'workspace level' and 'individual packages'?
+1. Check if .toml syntax in examples is correct
+1. Find out what `.cargo/config` is currently used for. Write down pros/cons of putting the lint config into `.cargo/config`. Add this to the appropriate section.
+1. In general expand the Pros/Cons of the configuration file section
+1. What about lint groups? Rustc now also has the `cargo` lint group as well as the
    `rust_2018_ideoms` and `rust_2018_compatibilty` lint groups.
-7. How does precedence work? Can packages override workspaces, or the other way around? Or maybe based on strictness (workspaces can make lints more restrictive, not less)?
-8. How much of an issue is errors for unknown lints? My feeling is that it
+1. How does precedence work? Can packages override workspaces, or the other way around? Or maybe based on strictness (workspaces can make lints more restrictive, not less)?
+1. How much of an issue is errors for unknown lints? My feeling is that it
    should be OK, but it does set a floor for the minimum supported rustc for
    something that is not really critical.
-9. How important is it to report the location of the lint? Currently rustc will
+1. How important is it to report the location of the lint? Currently rustc will
    tell you it's in the command-line. Finding the correct location for the lint
    may be tricky in a large project. I personally think it would be good to have
    the intent to implement location reporting in rustc before stabilization.
    TODO @oli_obk made a suggestion for this somewhere on GitHub, need to find again
-10. Ensure all github code links are permalinks
 
 ## Unresolved Questions
 
 TODO
+
+## Before publishing on IRLO
+
+1. Ensure all github code links are permalinks
+1. Ask in #wg-clippy if anyone want's to cross-check it
+1. Run vim spellchecker, codespell and paste into Google Docs to avoid typos
 
 [that_issue]: https://github.com/rust-lang/cargo/issues/5034
 [ex_serde]: https://github.com/serde-rs/serde/blob/5c24f0f0f300c7bd21bad5b097f6f1919de8477c/serde/src/lib.rs#L87-L134
