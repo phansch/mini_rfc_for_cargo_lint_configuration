@@ -136,6 +136,16 @@ TODO: ~~Summarize the different config files and~~ come to a conclusion
 
 ## Alternatives
 
+### Using `package.metadata` tables
+
+Another approach, that was [proposed on IRLO recently][other_irlo_post], could
+be using the `metadata` configuration:
+
+Cargo would look for a `[package.metadata.lints]` section instead of a `[lints]`
+section. Tools that are not hooking into the lint system, could use their own
+`[package.metadata.toolname]` section instead of using a custom file. This
+coulde be a good solution to remove the separate `rustfmt.toml` file.
+
 ### Different configuration file location
 
 There are some other plausible locations to configure lints, such as
@@ -162,14 +172,6 @@ an additional configuration file to the roots of their repositories.
 
 Additionally, we may also want to handle `rustfmt` configuration, and we would
 need to find a more general name.
-
-### TODO Other alternatives
-
-* Is there a more general solution? How does this relate to other tool configurations such as rustfmt.toml?
--> Also see Clippy.toml
-
-TODO: Try to think of a more general approach
-
 
 ## Future possibilities
 
@@ -229,3 +231,4 @@ TODO
 [previous_574]: https://github.com/rust-lang/rust-clippy/issues/574
 [previous_1313]: https://github.com/rust-lang/rust-clippy/issues/1313
 [previous_3164]: https://github.com/rust-lang/rust-clippy/issues/3164
+[other_irlo_post]: https://internals.rust-lang.org/t/tool-configs-in-cargo-toml-particularily-rustfmt-clippy/9055
