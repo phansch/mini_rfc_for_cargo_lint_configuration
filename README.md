@@ -56,10 +56,11 @@ Rust. For example, in Javascript, you have [eslint][eslint] and the package.json
 which don't really interact. In Ruby, you have [Rubocop][rubocop] for lints and
 bundler for dependencies.
 
-TODO: It would be good to look at some statically typed languages and see how they handle linting.
-
 Rust is different from these examples because it already comes with built-in
-lints and those lints depend on the compilation process.
+lints and offers external tools to make use of the same lint system.
+
+If another language exists that provides external tools with hooks into its lint
+system, it would be good to take a look.
 
 ## Guide-level explanation
 
