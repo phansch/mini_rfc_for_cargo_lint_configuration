@@ -127,8 +127,6 @@ both commands work with the same underlying system. Therefore, new users may not
 expect to be able to configure tool lints through a Cargo configuration file.
 
 - Pro: Everyone already has it. No need for additional files.
-- 
-- Con: The file might get too big or too hard to maintain together with other sections
 - Con: People might say that the Cargo.toml is part of Cargo which should just be concerned about package management and not lint configuration.
 - Con: Users might not expect external tool configuration to go into Cargo.toml
 
@@ -141,18 +139,26 @@ expect to be able to configure tool lints through a Cargo configuration file.
 As with `Cargo.toml` this file would need a new `[lints]` section, too. 
 
 - Pro: users could add their personal lint preferences in their home directory.
-- Con: I would estimate that almost every project would want to make use of a lint configuration file, which means that every project would end up with two different files.
+- Con: I would estimate that almost every project would want to make use of a lint configuration file, which means that every project would end up having to create the additional `.config/cargo` file.
 (Both rubocop and eslint support this)
 
 
-#### lints.toml
+#### Lints.toml
 
-- Pro: most flexible if we want our own inheritance of files and other features
-- Con: Yet another config file in the roots of repositories
-- Con: We may also want to handle rustfmt via this file where the name would not make as much sense
+A third option would be a completely separate file. Maybe called `Lints.toml`.
+This would be the most flexible implementation because we would not have to care
+about existing code for `Cargo.toml` or `.config/cargo`.
+
+However, it would also mean that, like with `.config/cargo`, users have to add
+an additional configuration file to the roots of their repositories.
+
+Additionally, we may also want to handle `rustfmt` configuration and we would
+need to find a more general name. See the next section on other tool
+configuration.
+
+TODO: Summarize the different config files and come to a conclusion
 
 ## Alternatives
-
 
 * Is there a more general solution? How does this relate to other tool configurations such as rustfmt.toml?
 -> Also see Clippy.toml
