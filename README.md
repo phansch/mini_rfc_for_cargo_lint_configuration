@@ -20,7 +20,8 @@ Being able to define the lints in an external file that will be used when
 building the crates would have several benefits:
 
  * Sharing one configuration file for all the crates in a workspace.
- * A canonical place to check for lint configuration when contributing to a new project.
+ * A canonical place to check for lint configuration when contributing to a new
+   project.
  * An easy way to examine the version history for lint changes.
 
 Some samples of where this would bring improvements:
@@ -33,8 +34,12 @@ Some samples of where this would bring improvements:
 
 ## Prior art and Rust
 
-In other programming language ecosystems the concerns of dependency management and things such as lint configuration are handled by completely separate tools. This is usually because the language itself does not come with any lints like Rust.
-For example, in Javascript you have [eslint][eslint] and the package.json which don't really interact. In Ruby you have [Rubocop][rubocop] for lints and then bundler for dependencies.
+In other programming language ecosystems the concerns of dependency management
+and things such as lint configuration are handled by completely separate tools.
+This is usually because the language itself does not come with any lints like
+Rust. For example, in Javascript you have [eslint][eslint] and the package.json
+which don't really interact. In Ruby you have [Rubocop][rubocop] for lints and
+then bundler for dependencies.
 
 TODO: It would be good to look at some statically typed languages and see how they handle linting.
 
@@ -42,14 +47,16 @@ Rust is different from these examples because it already comes with built-in lin
 
 ## Guide-level explanation
 
-Lint configuration can also be done through a configuration file.
-The configuration needs to be able to configure the `allow/warn/deny/forbid` lint levels for each lint.
-In order to be more teachable, using toml syntax is probably the best way to configure the lints. 
+Lint configuration can also be done through a configuration file.  The
+configuration needs to be able to configure the `allow/warn/deny/forbid` lint
+levels for each lint. In order to be more teachable, using toml syntax is
+probably the best way to configure the lints. 
 
 
 ## Reference-level explanation
 
-In the most basic version, it would be possible to set the `allow/warn/deny/forbid` of lints that are registered with the lint registry.
+In the most basic version, it would be possible to set the
+`allow/warn/deny/forbid` of lints that are registered with the lint registry.
 
 That would give us a format like this:
 
@@ -58,7 +65,9 @@ dead_code = "allow"
 non_snake_case = "allow"
 ```
 
-This format would make git history easy to read and would allow adding lint configuration options later on. It also allows to group lints together in other ways than just the lint level.
+This format would make git history easy to read and would allow adding lint
+configuration options later on. It also allows to group lints together in other
+ways than just the lint level.
 
 Another possible format would be:
 
@@ -66,12 +75,15 @@ Another possible format would be:
 allow = [dead_code, non_snake_case, ...]
 ```
 
-This has the benefit of not having to repeat the lint level for every single lint. However, this woul probably make diffs more difficult to read.
+This has the benefit of not having to repeat the lint level for every single
+lint. However, this woul probably make diffs more difficult to read.
 
 ### Lint precedence
 
-The lints can be specified on the workspace level and for individual packages. Anything on the package level will override the workspace setup on per lint basis.
-Specifying clippy-lints will result in clippy complaining about unknown lints if clippy isn't used.
+The lints can be specified on the workspace level and for individual packages.
+Anything on the package level will override the workspace setup on per lint
+basis. Specifying clippy-lints will result in clippy complaining about unknown
+lints if clippy isn't used.
 
 Also if Cargo/rustc ever support lint configurations, this would be more future proof:
 
@@ -79,16 +91,24 @@ Also if Cargo/rustc ever support lint configurations, this would be more future 
 cyclomatic_complexity = { state = "allow", threshold = 30 }
 ```
 
-The next section discusses the different places where the lint configuration could be stored. There are upsides and downsides for each of the locations.
+The next section discusses the different places where the lint configuration
+could be stored. There are upsides and downsides for each of the locations.
 
 ### Which configuration file?
 
 #### Cargo.toml
-The `Cargo.toml` is already used for configuring project and workspace level settings. I suppose most users would expect to find lint configuration in here. 
+
+The `Cargo.toml` is already used for configuring project and workspace level
+settings. I suppose most users would expect to find lint configuration in here. 
 
 Using the `Cargo.toml` to configure lints would need a new `[lints]` section.
 
-Rust is weird because we have the built-in lints (via `cargo check`) and then tool lints which use the same mechanism but through a different command line interface. For users it is not immedeately visible that both commands work with the same underlying system. Therefore, new users may not expect to be able to configure tool lints through a Cargo configuration file.
+
+Rust is different compared to other languages because we have the built-in lints
+(via `cargo check`) and then tool lints which use the same mechanism but through
+a different command line interface. For users it may not be immedeately clear that
+both commands work with the same underlying system. Therefore, new users may not
+expect to be able to configure tool lints through a Cargo configuration file.
 
 - Pro: Everyone already has it. No need for additional files.
 - 
