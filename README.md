@@ -120,7 +120,7 @@ find lint configuration there and pretty much every Rust project uses it
 already.
 
 However, one downside is that there is currently no way to share a `Cargo.toml`
-between separate projects. There's no concrete solution here, but, but maybe
+between separate projects. There's no concrete solution here, but maybe
 a new `inherit_from` or `inherit_lints_from` key could solve that problem. Prior
 art includes at least [Rubocop's `inherit_from` setting][rubocop_inherit] and
 [eslint's `extend` setting][eslint_inherit].
@@ -191,7 +191,7 @@ file to rustc via the command line arguments. Consequently, rustc will tell the
 user the lint level has been defined on the command-line. This is the opposite
 of helpful if the user wants to change the level of the lint:
 
-```
+```text
 error: any use of this value will cause an error
   --> $DIR/const-err-multi.rs:13:1
    |
@@ -205,7 +205,7 @@ LL | pub const A: i8 = -std::i8::MIN;
 
 Ideally, the user would get a `note` like this:
 
-```
+```text
 note: lint level defined here
   --> $HOME/code/rust/Cargo.toml:511:1
    |
