@@ -134,8 +134,8 @@ expect to be able to configure tool lints through a Cargo configuration file.
 
 Additionally, one might argue that `Cargo.toml` is part of Cargo, which should
 just be concerned about package management and not lint configuration. However,
-Cargo is currently the only thing (TODO: better word than `thing`) that
-interfaces with `rustc` and offers config files and tweak that interfacing.
+Cargo is currently the only tool available that interfaces with `rustc` and
+offers a way to configure interfacing with rustc.
 
 If we find a solution to `Cargo.toml` not being sharable accross projects, we
 consider it to be the best approach mainly because the file is already present
