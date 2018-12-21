@@ -109,8 +109,11 @@ lint. However, this would probably make diffs more difficult to read.
 
 The lints can be specified on the workspace level and for individual packages.
 Anything on the package level will override the workspace setup on a per lint
-basis. Specifying clippy-lints will result in Clippy complaining about unknown
-lints if Clippy isn't used. (TODO is this correct? how?)
+basis. This means that lints configured in the workspace will act as a default
+for packages within that workspace, and can be overridden by individual packages.
+
+Specifying clippy lints will result in Clippy complaining about unknown
+lints if Clippy isn't used. (TODO this seems a bit unclear)
 
 ### Why Cargo.toml?
 
@@ -229,7 +232,6 @@ Things that still need work or aren't even included in the text, yet:
 1. Difference between 'workspace level' and 'individual packages'?
 1. Check if .toml syntax in examples is correct
 1. In general expand the Pros/Cons of the configuration file section
-1. How does precedence work? Can packages override workspaces, or the other way around? Or maybe based on strictness (workspaces can make lints more restrictive, not less)?
 1. How much of an issue is errors for unknown lints? My feeling is that it
    should be OK, but it does set a floor for the minimum supported rustc for
    something that is not really critical.
