@@ -114,21 +114,32 @@ cyclomatic_complexity = { state = "allow", threshold = 30 }
 
 ### Why Cargo.toml?
 
-The `Cargo.toml` is already used for configuring project and workspace level
-settings. Most users would expect to find lint configuration there.
+The biggest advantage of using `Cargo.toml` is that it's already used for
+configuring project and workspace level settings. Most users would expect to
+find lint configuration there and pretty much every Rust project uses it
+already.
 
+However, one downside is that there is currently no way to share a `Cargo.toml`
+between separate projects. There's no concrete solution here, but maybe
+a new `inherit_from` or `inherit_lints_from` key could solve that problem. Prior
+art includes at least [Rubocop's `inherit_from` setting][rubocop_inherit] and
+[eslint's `extend` setting][eslint_inherit].
+
+TODO: Change paragraph intro:
 Rust is different compared to other languages because we have the built-in lints
 (via `cargo check`) and then tool lints which use the same mechanism but through
 a different command line interface. For users it may not be immedeately clear that
 both commands work with the same underlying system. Therefore, new users may not
 expect to be able to configure tool lints through a Cargo configuration file.
 
-- Pro: Everyone already has it. No need for additional files.
-- Con: People might say that `Cargo.toml` is part of Cargo, which should just be
-concerned about package management and not lint configuration.
-- Con: Users might not expect external tool configuration to go into Cargo.toml
+Additionally, one might argue that `Cargo.toml` is part of Cargo, which should
+just be concerned about package management and not lint configuration. However,
+Cargo is currently the only tool available that interfaces with `rustc` and
+offers a way to configure interfacing with rustc.
 
-TODO: come to a conclusion
+If we find a solution to `Cargo.toml` not being sharable accross projects, we
+consider it to be the best approach mainly because the file is already present
+in every Cargo project.
 
 ## Alternatives
 
@@ -180,7 +191,7 @@ file to rustc via the command line arguments. Consequently, rustc will tell the
 user the lint level has been defined on the command-line. This is the opposite
 of helpful if the user wants to change the level of the lint:
 
-```
+```text
 error: any use of this value will cause an error
   --> $DIR/const-err-multi.rs:13:1
    |
@@ -194,7 +205,7 @@ LL | pub const A: i8 = -std::i8::MIN;
 
 Ideally, the user would get a `note` like this:
 
-```
+```text
 note: lint level defined here
   --> $HOME/code/rust/Cargo.toml:511:1
    |
@@ -229,6 +240,7 @@ TODO
 
 ## Before publishing on IRLO
 
+1. Look for TODOs in text
 1. Ensure all github code links are permalinks
 1. Ask in #wg-clippy if anyone want's to cross-check it
 1. Run vim spellchecker, codespell and paste into Google Docs to avoid typos
@@ -257,3 +269,5 @@ TODO
 [cargo_config]: https://doc.rust-lang.org/cargo/reference/config.html
 [other_irlo_post]: https://internals.rust-lang.org/t/tool-configs-in-cargo-toml-particularily-rustfmt-clippy/9055
 [lintsource]: https://doc.rust-lang.org/nightly/nightly-rustc/rustc/lint/enum.LintSource.html
+[rubocop_inherit]: https://docs.rubocop.org/en/latest/configuration/#inheriting-from-another-configuration-file-in-the-project
+[eslint_inherit]: https://eslint.org/docs/developer-guide/shareable-configs
