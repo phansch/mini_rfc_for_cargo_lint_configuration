@@ -10,7 +10,7 @@ this Mini-RFC is meant to kick-off.
 
 ## Summary
 
-Configure lint levels and possibly configure lints via a config file.
+Configure lint levels and possibly configure lints in `Cargo.toml`.
 
 ## Motivation
 
@@ -88,6 +88,13 @@ This format would make git history easy to read and would allow you to add
 configuration options to lints later on. It also allows grouping of lints on
 more than just the lint level.
 
+And if Cargo/rustc ever support lint configurations, this would be more future proof:
+
+```toml
+[lints]
+cyclomatic_complexity = { state = "allow", threshold = 30 }
+```
+
 Another possible format would be:
 
 ```toml
@@ -103,14 +110,7 @@ lint. However, this would probably make diffs more difficult to read.
 The lints can be specified on the workspace level and for individual packages.
 Anything on the package level will override the workspace setup on a per lint
 basis. Specifying clippy-lints will result in Clippy complaining about unknown
-lints if Clippy isn't used.
-
-Also if Cargo/rustc ever support lint configurations, this would be more future proof:
-
-```toml
-[lints]
-cyclomatic_complexity = { state = "allow", threshold = 30 }
-```
+lints if Clippy isn't used. (TODO is this correct? how?)
 
 ### Why Cargo.toml?
 
@@ -236,7 +236,8 @@ Things that still need work or aren't even included in the text, yet:
 
 ## Unresolved Questions
 
-TODO
+1. There is currently no good way to detect whether a lint is known or not: all configured lints are passed to rustc directly, which throws
+an error if the lint isn't known. Ideally, Cargo would issue a warning instead.
 
 ## Before publishing on IRLO
 
