@@ -10,7 +10,7 @@ this Mini-RFC is meant to kick-off.
 
 ## Summary
 
-Configure lint levels and possibly configure lints via a config file.
+Configure lint levels and possibly configure lints in `Cargo.toml`.
 
 ## Motivation
 
@@ -88,6 +88,13 @@ This format would make git history easy to read and would allow you to add
 configuration options to lints later on. It also allows grouping of lints on
 more than just the lint level.
 
+And if Cargo/rustc ever support lint configurations, this would be more future proof:
+
+```toml
+[lints]
+cyclomatic_complexity = { state = "allow", threshold = 30 }
+```
+
 Another possible format would be:
 
 ```toml
@@ -102,15 +109,11 @@ lint. However, this would probably make diffs more difficult to read.
 
 The lints can be specified on the workspace level and for individual packages.
 Anything on the package level will override the workspace setup on a per lint
-basis. Specifying clippy-lints will result in Clippy complaining about unknown
-lints if Clippy isn't used.
+basis. This means that lints configured in the workspace will act as a default
+for packages within that workspace, and can be overridden by individual packages.
 
-Also if Cargo/rustc ever support lint configurations, this would be more future proof:
-
-```toml
-[lints]
-cyclomatic_complexity = { state = "allow", threshold = 30 }
-```
+Specifying clippy lints will result in Clippy complaining about unknown
+lints if Clippy isn't used. (TODO this seems a bit unclear)
 
 ### Why Cargo.toml?
 
@@ -229,14 +232,14 @@ Things that still need work or aren't even included in the text, yet:
 1. Difference between 'workspace level' and 'individual packages'?
 1. Check if .toml syntax in examples is correct
 1. In general expand the Pros/Cons of the configuration file section
-1. How does precedence work? Can packages override workspaces, or the other way around? Or maybe based on strictness (workspaces can make lints more restrictive, not less)?
 1. How much of an issue is errors for unknown lints? My feeling is that it
    should be OK, but it does set a floor for the minimum supported rustc for
    something that is not really critical.
 
 ## Unresolved Questions
 
-TODO
+1. There is currently no good way to detect whether a lint is known or not: all configured lints are passed to rustc directly, which throws
+an error if the lint isn't known. Ideally, Cargo would issue a warning instead.
 
 ## Before publishing on IRLO
 
