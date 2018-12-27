@@ -177,7 +177,7 @@ As with `Cargo.toml`, this file would need a new `[lints]` section, too.
 Another option would be a completely separate file. Maybe called `Lints.toml`.
 This would be the most flexible implementation because we would not have to care
 about existing code for `Cargo.toml` or `.cargo/config`. It is also more similar
-to the existing `Clippy.toml`.
+to the existing [`Clippy.toml`][clippy_toml].
 
 However, it would also mean that, like with `.cargo/config`, users have to add
 an additional configuration file to the roots of their repositories.
@@ -187,9 +187,14 @@ need to find a more general name.
 
 ## Future possibilities
 
+* It might be desirable to also be able to configure the settings of specifics lints, such as in the `cyclomatic_complexity` shown earlier. This could also replace
+the [`clippy.toml`][clippy_toml] file, which currently allows configuring lints.
+* It would make sense to include other settings related to lints, such as output verbosity or `--cap-lints` in the lint configuration.
+* Other tools could also add lints to the same lints section, not just Clippy.
+
 ### Diagnostics for lint level definition location reporting
 
-With the current approach we pass all lint level definitions from the config
+With the current approach, we pass all lint level definitions from the config
 file to rustc via the command line arguments. Consequently, rustc will tell the
 user the lint level has been defined on the command-line. This is the opposite
 of helpful if the user wants to change the level of the lint:
@@ -210,7 +215,7 @@ Ideally, the user would get a `note` like this:
 
 ```text
 note: lint level defined here
-  --> $HOME/code/rust/Cargo.toml:511:1
+  --> $DIR/Cargo.toml:511:1
    |
 LL | const_err = { state = "deny" }
    | ^^^^^^^^^
@@ -219,11 +224,6 @@ LL | const_err = { state = "deny" }
 Adding a new variant to [`LintSource`][lintsource] is the easy part, but how is this
 information passed from Cargo to rustc? Should we pass a json file with lint
 level definition locations to rustc everytime cargo invokes rustc?
-
-* It might be desirable to also be able to configure the settings of specifics lints. This could also replace
-the `clippy.toml` file, which currently allows configuring lints.
-* It would make sense to include other settings related to lints, such as output verbosity or `--cap-lints` in the lint configuration.
-* Other tools could also add lints to the same lints section, not just Clippy.
 
 ## TODO text
 
@@ -273,3 +273,4 @@ an error if the lint isn't known. Ideally, Cargo would issue a warning instead.
 [lintsource]: https://doc.rust-lang.org/nightly/nightly-rustc/rustc/lint/enum.LintSource.html
 [rubocop_inherit]: https://docs.rubocop.org/en/latest/configuration/#inheriting-from-another-configuration-file-in-the-project
 [eslint_inherit]: https://eslint.org/docs/developer-guide/shareable-configs
+[clippy_toml]: https://github.com/rust-lang/rust-clippy#configuration
