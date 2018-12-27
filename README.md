@@ -99,7 +99,7 @@ Another possible format would be:
 
 ```toml
 [lints]
-allow = [dead_code, non_snake_case, ...]
+allow = ["dead_code", "non_snake_case"]
 ```
 
 This has the benefit of not having to repeat the lint level for every single
@@ -230,7 +230,6 @@ the `clippy.toml` file, which currently allows configuring lints.
 Things that still need work or aren't even included in the text, yet:
 
 1. Difference between 'workspace level' and 'individual packages'?
-1. Check if .toml syntax in examples is correct
 1. In general expand the Pros/Cons of the configuration file section
 1. How much of an issue is errors for unknown lints? My feeling is that it
    should be OK, but it does set a floor for the minimum supported rustc for
