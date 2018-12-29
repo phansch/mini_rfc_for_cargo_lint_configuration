@@ -10,13 +10,15 @@ this Mini-RFC is meant to kick-off.
 
 ## Summary
 
-Configure lint levels and possibly configure lints in `Cargo.toml`.
+Rust currently only allows configuring lints on the command line or via crate
+level attributes. This Mini-RFC proposes an additional way to configure lint
+levels and possibly lint-specific settings in `Cargo.toml`.
 
 ## Motivation
 
-Currently, project-wide lint configuration needs to be included in the crate
-sources. This is okay when the project consists of a single crate, but gets
-more cumbersome when the project is a workspace with a dozen crates.
+Configuring lint levels on the command line or via crate level attributes is
+fine when the project consists of a single crate, but gets more cumbersome when
+the project is a workspace with a dozen crates.
 
 Being able to define the lints in an external file that will be used when
 building the crates would have several benefits:
