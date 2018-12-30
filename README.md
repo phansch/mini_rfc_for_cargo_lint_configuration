@@ -107,15 +107,22 @@ allow = ["dead_code", "non_snake_case"]
 This has the benefit of not having to repeat the lint level for every single
 lint. However, this would probably make diffs more difficult to read.
 
+### `cargo check` and tool lints interaction
+
+If a user has configured a tool lint in `Cargo.toml` and runs `cargo check`, the
+implementation needs to make sure to only pass the rustc lints to `rustc`,
+otherwise rustc would complain about unknown lints because it was invoken with
+`check` and not `clippy`, for example.
+
+When `cargo clippy` is executed, it should include the rustc lints, as it does
+today.
+
 ### Lint precedence
 
 The lints can be specified on the workspace level and for individual packages.
 Anything on the package level will override the workspace setup on a per lint
 basis. This means that lints configured in the workspace will act as a default
 for packages within that workspace, and can be overridden by individual packages.
-
-Specifying clippy lints will result in Clippy complaining about unknown
-lints if Clippy isn't used. (TODO this seems a bit unclear)
 
 ### Why Cargo.toml?
 
