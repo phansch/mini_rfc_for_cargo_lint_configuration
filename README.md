@@ -143,7 +143,7 @@ just be concerned about package management and not lint configuration. However,
 Cargo is currently the only tool available that interfaces with `rustc` and
 offers a way to configure interfacing with rustc.
 
-For users it may also not be immedeately clear that both `cargo check` and
+For users it may also not be immediately clear that both `cargo check` and
 `cargo clippy` work with the same underlying lint system and they may not expect
 to be able to configure tool lints through a Cargo configuration file. This is
 because other programming language ecosystems usually have completely separate
