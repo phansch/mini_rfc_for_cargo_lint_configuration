@@ -179,11 +179,15 @@ There are some other plausible locations to configure lints, such as
 A more standard location, though less well-known, would be `.cargo/config` (see [Cargo reference](cargo_docs)).
 As with `Cargo.toml`, this file would need a new `[lints]` section, too.
 
-- Pro: Users could add their personal lint preferences in their home directory (both `$HOME/.cargo/config` and `.cargo/config` are supported).
-- Con: Lint configuration would supposedly be pretty common, while custom Cargo configuration is rarely used.
-- Con: I would estimate that almost every project would want to make use of a lint configuration file, which means that every project would end up having to create the additional `.cargo/config` file.
+One big advantage would be that users could add their personal lint preferences
+in their home directory (both `$HOME/.cargo/config` and `.cargo/config` are
+supported) as `.cargo/config` already
+[has a hierarchical configuration lookup][cargo_hierarchical].
 
-(Both [rubocop][rubocop] and [eslint][eslint] support this)
+A downside would be that Lint configuration via config file would supposedly be
+pretty common, while custom Cargo configuration is rarely used. Almost every
+project would want to make use of a lint configuration, which means that every
+project would end up having to create the additional `.cargo/config` file.
 
 #### Lints.toml
 
@@ -287,3 +291,4 @@ an error if the lint isn't known. Ideally, Cargo would issue a warning instead.
 [rubocop_inherit]: https://docs.rubocop.org/en/latest/configuration/#inheriting-from-another-configuration-file-in-the-project
 [eslint_inherit]: https://eslint.org/docs/developer-guide/shareable-configs
 [clippy_toml]: https://github.com/rust-lang/rust-clippy#configuration
+[cargo_hierarchical]: https://doc.rust-lang.org/cargo/reference/config.html#hierarchical-structure
