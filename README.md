@@ -56,10 +56,11 @@ and things such as lint configuration are handled by completely separate tools.
 This is usually because the language itself does not come with any lints like
 Rust. For example, in Javascript, you have [eslint][eslint] and the package.json,
 which don't really interact. In Ruby, you have [Rubocop][rubocop] for lints and
-bundler for dependencies.
+`bundler`/`Gemfile` for dependencies.
 
 Rust is different from these examples because it already comes with built-in
-lints and offers external tools to make use of the same lint system.
+lints and offers an interface for external tools to make use of the same lint
+system.
 
 If another language exists that provides external tools with hooks into its lint
 system, it would be good to take a look.
@@ -137,17 +138,17 @@ a new `inherit_from` or `inherit_lints_from` key could solve that problem. Prior
 art includes at least [Rubocop's `inherit_from` setting][rubocop_inherit] and
 [eslint's `extend` setting][eslint_inherit].
 
-TODO: Change paragraph intro:
-Rust is different compared to other languages because we have the built-in lints
-(via `cargo check`) and then tool lints which use the same mechanism but through
-a different command line interface. For users it may not be immedeately clear that
-both commands work with the same underlying system. Therefore, new users may not
-expect to be able to configure tool lints through a Cargo configuration file.
-
 Additionally, one might argue that `Cargo.toml` is part of Cargo, which should
 just be concerned about package management and not lint configuration. However,
 Cargo is currently the only tool available that interfaces with `rustc` and
 offers a way to configure interfacing with rustc.
+
+For users it may also not be immedeately clear that both `cargo check` and
+`cargo clippy` work with the same underlying lint system and they may not expect
+to be able to configure tool lints through a Cargo configuration file. This is
+because other programming language ecosystems usually have completely separate
+tools for their lints. See the _Prior art and Rust_ section above for a small
+discussion of this problem.
 
 If we find a solution to `Cargo.toml` not being sharable accross projects, we
 consider it to be the best approach mainly because the file is already present
