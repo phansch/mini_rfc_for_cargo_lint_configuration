@@ -76,13 +76,16 @@ the `Cargo.toml` file.
 
 In the most basic version, it would be possible to set the
 `allow/warn/deny/forbid` of lints that are registered with the lint registry.
-These would be grouped in a new `[lints]` section.
+These would be grouped in a new `[lints]` section. Tool-specific lints (like
+Clippy) are grouped together using the tool name.
 
 That would give us a format like this:
 
 ```toml
 [lints]
 dead_code = "allow"
+
+[lints.clippy]
 non_snake_case = "allow"
 ```
 
@@ -93,7 +96,7 @@ more than just the lint level.
 And if Cargo/rustc ever support lint configurations, this would be more future proof:
 
 ```toml
-[lints]
+[lints.clippy]
 cyclomatic_complexity = { state = "allow", threshold = 30 }
 ```
 
