@@ -40,14 +40,14 @@ Some real world examples of where this could bring improvements:
   enable warnings for the `rust_2018_ideoms` and `rust_2018_compatibilty` lint
   groups in [every][am_1] [single][am_2] [one][am_3] [of][am_4] [the][am_5]
   [sub-crates][am_6] (that's 6 of them linked here).
-* Similarily [ripgrep][ripgrep] denies the `missing_docs` lint in all of its 9
+* Similarly, [ripgrep][ripgrep] denies the `missing_docs` lint in all of its 9
   workspace members: [GitHub search][ripgrep_search]
 
 Previously this topic came up a few times in the Clippy issue tracker as well:
 
 * [#574: Ability to conditionally set levels for lints when not using clippy through cargo features](previous_574)
 * [#1313: Allow/deny lints in clippy.toml](previous_1313)
-* [#3164: It is impossible to understand from the readme file how to supress lints using clippy.toml](previous_3164)
+* [#3164: It is impossible to understand from the readme file how to suppress lints using clippy.toml](previous_3164)
 
 ## Prior art and Rust
 
@@ -115,7 +115,7 @@ lint. However, this would probably make diffs more difficult to read.
 
 If a user has configured a tool lint in `Cargo.toml` and runs `cargo check`, the
 implementation needs to make sure to only pass the rustc lints to `rustc`,
-otherwise rustc would complain about unknown lints because it was invoken with
+otherwise rustc would complain about unknown lints because it was invoked with
 `check` and not `clippy`, for example.
 
 When `cargo clippy` is executed, it should include the rustc lints, as it does
@@ -153,7 +153,7 @@ because other programming language ecosystems usually have completely separate
 tools for their lints. See the _Prior art and Rust_ section above for a small
 discussion of this problem.
 
-If we find a solution to `Cargo.toml` not being sharable accross projects, we
+If we find a solution to `Cargo.toml` not being shareable across projects, we
 consider it to be the best approach mainly because the file is already present
 in every Cargo project.
 
@@ -167,7 +167,7 @@ be using the `metadata` configuration:
 Cargo would look for a `[package.metadata.lints]` section instead of a `[lints]`
 section. Tools that are not hooking into the lint system, could use their own
 `[package.metadata.toolname]` section instead of using a custom file. This
-coulde be a good solution to remove the separate `rustfmt.toml` file.
+could be a good solution to remove the separate `rustfmt.toml` file.
 
 ### Different configuration file location
 
@@ -261,8 +261,7 @@ an error if the lint isn't known. Ideally, Cargo would issue a warning instead.
 
 1. Look for TODOs in text
 1. Ensure all github code links are permalinks
-1. Ask in #wg-clippy if anyone want's to cross-check it
-1. Run vim spellchecker, codespell and paste into Google Docs to avoid typos
+1. Ask in #wg-clippy if anyone wants to cross-check it
 
 [that_issue]: https://github.com/rust-lang/cargo/issues/5034
 [ex_serde]: https://github.com/serde-rs/serde/blob/5c24f0f0f300c7bd21bad5b097f6f1919de8477c/serde/src/lib.rs#L87-L134
