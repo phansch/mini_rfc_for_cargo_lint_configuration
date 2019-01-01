@@ -254,7 +254,7 @@ LL | const_err = { state = "deny" }
 
 Adding a new variant to [`LintSource`][lintsource] is the easy part, but how is this
 information passed from Cargo to rustc? Should we pass a json file with lint
-level definition locations to rustc everytime cargo invokes rustc?
+level definition locations to rustc every time cargo invokes rustc?
 
 ### Diagnostics for unknown lints reporting
 
@@ -262,12 +262,6 @@ There is currently no good way to detect whether a lint is known or not: all
 configured lints are passed to rustc directly, which throws an error if the
 lint isn't known. Ideally, Cargo would issue a warning instead that includes
 the line number in the configuration file.
-
-## Before publishing on IRLO
-
-1. Look for TODOs in text
-1. Ensure all github code links are permalinks
-1. Ask in #wg-clippy if anyone wants to cross-check it
 
 [that_issue]: https://github.com/rust-lang/cargo/issues/5034
 [ex_serde]: https://github.com/serde-rs/serde/blob/5c24f0f0f300c7bd21bad5b097f6f1919de8477c/serde/src/lib.rs#L87-L134
