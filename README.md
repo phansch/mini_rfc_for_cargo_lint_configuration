@@ -166,8 +166,11 @@ be using the `metadata` configuration:
 
 Cargo would look for a `[package.metadata.lints]` section instead of a `[lints]`
 section. Tools that are not hooking into the lint system, could use their own
-`[package.metadata.toolname]` section instead of using a custom file. This
-could be a good solution to remove the separate `rustfmt.toml` file.
+`[package.metadata.toolname]` section instead of using a custom file.
+
+One problem with `[package.metadata]` is that it does not support [virtual
+workspaces][virtual_workspaces] as it requires the `package` table to be
+present in the `Cargo.toml`.
 
 ### Different configuration file location
 
@@ -291,3 +294,4 @@ an error if the lint isn't known. Ideally, Cargo would issue a warning instead.
 [eslint_inherit]: https://eslint.org/docs/developer-guide/shareable-configs
 [clippy_toml]: https://github.com/rust-lang/rust-clippy#configuration
 [cargo_hierarchical]: https://doc.rust-lang.org/cargo/reference/config.html#hierarchical-structure
+[virtual_workspaces]: https://doc.rust-lang.org/cargo/reference/manifest.html#virtual-manifest
