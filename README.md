@@ -10,9 +10,9 @@ Mini-RFC is meant to kick-off.
 
 ## Summary
 
-Rust currently only allows configuring lints on the command line or via crate
-level attributes. This Mini-RFC proposes an additional way to configure lint
-levels and possibly lint-specific settings in `Cargo.toml`.
+Rust currently only allows configuring lint levels on the command line or via
+crate level attributes. This Mini-RFC proposes an additional way to configure
+lint levels and possibly lint-specific settings in `Cargo.toml`.
 
 ## Motivation
 
@@ -188,9 +188,9 @@ project would end up having to create the additional `.cargo/config` file.
 #### Lints.toml
 
 Another option would be a completely separate file. Maybe called `Lints.toml`.
-This would be the most flexible implementation because we would not have to care
-about existing code for `Cargo.toml` or `.cargo/config`. It is also more similar
-to the existing [`Clippy.toml`][clippy_toml].
+This would be the most flexible solution because the implementation would not
+have to care about existing code for `Cargo.toml` or `.cargo/config`. It is also
+more similar to the existing [`Clippy.toml`][clippy_toml].
 
 However, it would also mean that, like with `.cargo/config`, users have to add
 an additional configuration file to the roots of their repositories.
