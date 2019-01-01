@@ -49,22 +49,6 @@ Previously this topic came up a few times in the Clippy issue tracker as well:
 * [#1313: Allow/deny lints in clippy.toml](previous_1313)
 * [#3164: It is impossible to understand from the readme file how to suppress lints using clippy.toml](previous_3164)
 
-## Prior art and Rust
-
-In other programming language ecosystems, the concerns of dependency management
-and things such as lint configuration are handled by completely separate tools.
-This is usually because the language itself does not come with any lints like
-Rust. For example, in Javascript, you have [eslint][eslint] and the
-`package.json`, which don't really interact. In Ruby, you have
-[Rubocop][rubocop] for lints and `bundler`/`Gemfile` for dependencies.
-
-Rust is different from these examples because it already comes with built-in
-lints and offers an interface for external tools to make use of the same lint
-system.
-
-If another language exists that provides external tools with hooks into its lint
-system, it would be good to take a look.
-
 ## Guide-level explanation
 
 Lint configuration can also be done through a configuration file.  The
@@ -150,7 +134,7 @@ For users it may also not be immediately clear that both `cargo check` and
 `cargo clippy` work with the same underlying lint system and they may not expect
 to be able to configure tool lints through a Cargo configuration file. This is
 because other programming language ecosystems usually have completely separate
-tools for their lints. See the _Prior art and Rust_ section above for a small
+tools for their lints. See the _Prior art and Rust_ section below for a small
 discussion of this problem.
 
 If we find a solution to `Cargo.toml` not being shareable across projects, we
@@ -204,6 +188,22 @@ an additional configuration file to the roots of their repositories.
 
 Additionally, we may also want to handle `rustfmt` configuration, and we would
 need to find a more general name.
+
+## Prior art
+
+In other programming language ecosystems, the concerns of dependency management
+and things such as lint configuration are handled by completely separate tools.
+This is usually because the language itself does not come with any lints like
+Rust. For example, in Javascript, you have [eslint][eslint] and the
+`package.json`, which don't really interact. In Ruby, you have
+[Rubocop][rubocop] for lints and `bundler`/`Gemfile` for dependencies.
+
+Rust is different from these examples because it already comes with built-in
+lints and offers an interface for external tools to make use of the same lint
+system.
+
+If another language exists that provides external tools with hooks into its lint
+system, it would be good to take a look.
 
 ## Future possibilities
 
