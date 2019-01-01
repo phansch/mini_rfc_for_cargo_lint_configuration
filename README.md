@@ -141,6 +141,15 @@ If we find a solution to `Cargo.toml` not being shareable across projects, we
 consider it to be the best approach mainly because the file is already present
 in every Cargo project.
 
+## Drawbacks
+- Adding lint configuration to `Cargo.toml` means that there will be more places
+where lints can be configured, making it more difficult to quickly see what lint
+levels are used.
+- Another downside of this is that it becomes less clear which lint level takes
+precedence, if the same lint is set multiple times in different locations. Even
+if the precedence rules are useful for the majority of use cases, developers still
+need to be aware of the precedence, or avoid specifying the lint multiple times.
+
 ## Alternatives
 
 ### Using `package.metadata` tables
