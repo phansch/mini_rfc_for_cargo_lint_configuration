@@ -2,11 +2,11 @@
 
 This is a rough plan for adding lint configuration by config file to Cargo.
 
-It's a continuation of [this Cargo issue][that_issue]. I copied over relevant parts
-that were written by @rantanen and expanded on additional parts. @detrumi opened
-a [Cargo PR][detrumi_pr] when the issue was opened. However, it was decided
-at the time that the design should go through more discussion first. That's what
-this Mini-RFC is meant to kick-off.
+It's a continuation of [this Cargo issue][that_issue] from @rantanen. Relevant
+parts were copied and used as a starting ground for this text. @detrumi opened a
+[Cargo PR][detrumi_pr] when the issue was opened. However, it was decided at the
+time that the design should go through more discussion first. That's what this
+Mini-RFC is meant to kick-off.
 
 ## Summary
 
@@ -18,7 +18,7 @@ levels and possibly lint-specific settings in `Cargo.toml`.
 
 Configuring lint levels on the command line or via crate level attributes is
 fine when the project consists of a single crate, but gets more cumbersome when
-the project is a workspace with a dozen crates.
+the project is a workspace with more than a few crates.
 
 Being able to define the lints in an external file that will be used when
 building the crates would have several benefits:
