@@ -256,23 +256,12 @@ Adding a new variant to [`LintSource`][lintsource] is the easy part, but how is 
 information passed from Cargo to rustc? Should we pass a json file with lint
 level definition locations to rustc everytime cargo invokes rustc?
 
-## TODO text
+### Diagnostics for unknown lints reporting
 
-Things that still need work or aren't even included in the text, yet:
-
-1. How much of an issue is errors for unknown lints? My feeling is that it
-   should be OK, but it does set a floor for the minimum supported rustc for
-   something that is not really critical.
-
-## Unresolved Questions
-
-1. There is currently no good way to detect whether a lint is known or not: all
-   configured lints are passed to rustc directly, which throws an error if the
-   lint isn't known. Ideally, Cargo would issue a warning instead that includes
-   the line number in the configuration file.
-1. The lint level definition location needs to be passed from the Cargo.toml to
-   rustc somehow, so that rustc can emit the correct lint level definition
-   location in the diagnostics.
+There is currently no good way to detect whether a lint is known or not: all
+configured lints are passed to rustc directly, which throws an error if the
+lint isn't known. Ideally, Cargo would issue a warning instead that includes
+the line number in the configuration file.
 
 ## Before publishing on IRLO
 
