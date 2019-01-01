@@ -71,7 +71,7 @@ That would give us a format like this:
 dead_code = "allow"
 
 [lints.clippy]
-non_snake_case = "allow"
+non_snake_case = "warn"
 ```
 
 This format would make git history easy to read and would allow you to add
@@ -82,7 +82,7 @@ And if Cargo/rustc ever support lint configurations, this would be more future p
 
 ```toml
 [lints.clippy]
-cyclomatic_complexity = { state = "allow", threshold = 30 }
+cyclomatic_complexity = { state = "deny", threshold = 30 }
 ```
 
 Another possible format would be:
@@ -134,7 +134,7 @@ For users it may also not be immediately clear that both `cargo check` and
 `cargo clippy` work with the same underlying lint system and they may not expect
 to be able to configure tool lints through a Cargo configuration file. This is
 because other programming language ecosystems usually have completely separate
-tools for their lints. See the _Prior art and Rust_ section below for a small
+tools for their lints. See the _Prior art_ section below for a small
 discussion of this problem.
 
 If we find a solution to `Cargo.toml` not being shareable across projects, we
