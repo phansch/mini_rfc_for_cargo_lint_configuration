@@ -212,7 +212,8 @@ lints and offers an interface for external tools to make use of the same lint
 system.
 
 If another language exists that provides external tools with hooks into its lint
-system, it would be good to take a look.
+system, it would be good to take a look. Specifically how the interaction
+between external and internals lints is handled.
 
 ## Future possibilities
 
@@ -220,6 +221,7 @@ system, it would be good to take a look.
 the [`clippy.toml`][clippy_toml] file, which currently allows configuring lints.
 * It would make sense to include other settings related to lints, such as output verbosity or `--cap-lints` in the lint configuration.
 * Other tools could also add lints to the same lints section, not just Clippy.
+* rustfmt configuration via `Cargo.toml` might be something that's desired, too.
 
 ### Diagnostics for lint level definition location reporting
 
@@ -258,16 +260,19 @@ level definition locations to rustc everytime cargo invokes rustc?
 
 Things that still need work or aren't even included in the text, yet:
 
-1. Difference between 'workspace level' and 'individual packages'?
-1. In general expand the Pros/Cons of the configuration file section
 1. How much of an issue is errors for unknown lints? My feeling is that it
    should be OK, but it does set a floor for the minimum supported rustc for
    something that is not really critical.
 
 ## Unresolved Questions
 
-1. There is currently no good way to detect whether a lint is known or not: all configured lints are passed to rustc directly, which throws
-an error if the lint isn't known. Ideally, Cargo would issue a warning instead.
+1. There is currently no good way to detect whether a lint is known or not: all
+   configured lints are passed to rustc directly, which throws an error if the
+   lint isn't known. Ideally, Cargo would issue a warning instead that includes
+   the line number in the configuration file.
+1. The lint level definition location needs to be passed from the Cargo.toml to
+   rustc somehow, so that rustc can emit the correct lint level definition
+   location in the diagnostics.
 
 ## Before publishing on IRLO
 
